@@ -1,0 +1,27 @@
+# ============================================================
+# Rian-Claude Controller
+# Repository line-ending policy
+# ============================================================
+
+# Default text normalization
+* text=auto
+
+# Project source / specification files
+*.md    text eol=lf
+*.json  text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.py    text eol=lf
+*.ps1   text eol=lf
+*.txt   text eol=lf
+
+# Windows command files, if used later
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+
+# Binary files
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.pdf   binary
+*.zip   binary

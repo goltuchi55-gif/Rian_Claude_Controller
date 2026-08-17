@@ -1,0 +1,45 @@
+# ============================================================
+# Rian-Claude Controller
+# Local runtime / secrets / temporary data
+# ============================================================
+
+# Runtime state
+90_RUNTIME/*
+!90_RUNTIME/.gitkeep
+
+# Logs
+91_LOG/*
+!91_LOG/.gitkeep
+
+# Secrets
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.token
+secrets/
+credentials/
+
+# Runtime JSON / lock / pid
+*.pid
+*.lock
+*.tmp
+*.temp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Backup noise
+*.bak
+*.backup
+*~
