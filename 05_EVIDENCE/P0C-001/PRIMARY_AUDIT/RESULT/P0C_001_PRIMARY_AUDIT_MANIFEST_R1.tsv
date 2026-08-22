@@ -1,0 +1,6 @@
+record_id	artefact	role	sha256	measurement_class	note
+AM-001	P0C_001_PRIMARY_AUDIT_EXPECTATION_R1_20260822.md	pre-disclosure expectation (sealed, Controller-acknowledged)	fc473adc3176f4d578f1892ad56d1da9b84cba005a828b13e05fff0cb9bb6976	MEASURED	already on origin/main under CUSTODY_PENDING; not re-deposited
+AM-002	P0C_001_PRIMARY_AUDIT_RAW_FINDINGS_R1_20260822.md	RAW findings (immutable)	75a658e3d5fee242a640f4deaa1dfa49c28c8dfd08440b37c18684f809aeabd1	MEASURED	not replaced by the verdict
+AM-003	P0C_001_PRIMARY_AUDIT_VERDICT_R1_20260822.md	verdict NEEDS_HUMAN	d7681947d66956fef17a2dd7836ad0baad925462321a1230bbb1e1c2a76eb35c	MEASURED	enumerates 0 BLOCKING findings in full
+AM-004	50_RIAN_CONTROLL/P0C_001_CONSOLIDATED_HUMAN_DECISION_CANDIDATE_R1_20260822.md	audit target (read-only, unmodified)	2eb3cc51f03bc5296f2630a22317d721807cce290392357607111877d56b7d00	MEASURED	3-way identity match before body was opened
+AM-005	90_EVIDENCE/P0C_001_CONTROLLER_INTEGRATION_VERIFICATION_R1.tsv	Controller evidence re-measured by auditor	6512f2f3d99cf5ad642f737991a61a052d4400fd1456545f07c928eb6be9af2b	MEASURED	IV-002 reproduced 17/17; IV-001 reproduced under stated scope
