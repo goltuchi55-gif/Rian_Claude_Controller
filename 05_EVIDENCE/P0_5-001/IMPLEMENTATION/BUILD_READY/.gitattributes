@@ -1,0 +1,3 @@
+# Evidence bytes are hashed and verified by detached sidecars.
+# Never convert line endings for anything in this directory.
+* text eol=lf
