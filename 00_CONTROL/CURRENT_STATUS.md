@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-22T22:42:00+09:00
+updated_at_jst: 2026-08-22T23:20:00+09:00
 controller: RIAN
 ---
 
@@ -10,35 +10,40 @@ controller: RIAN
 ## Overall
 
 - ACTIVE_PHASE: P0-C
-- STATE: WAITING_FOR_PRIMARY_AUDIT_RESULT_HANDOFF
+- STATE: PRIMARY_AUDIT_R1_NEEDS_HUMAN_BASIS_ONLY__R5_ISSUED
 - NEXT_PHASE_ON_PASS: P0.5
-- HUMAN_APPROVAL_REQUIRED_NOW: NO
+- HUMAN_APPROVAL_REQUIRED_NOW: NO_NEW_DECISION_EXPECTED
 - HUMAN_COPY_PASTE_REQUIRED: NO
 - PRODUCTION_IMPACT: NONE
 
-## P0-C
+## Primary Audit R1
 
-- GrAlpha: SEALED
-- GrBeta: SEALED
-- GrGamma: SEALED
-- RIAN consolidated candidate: FROZEN
-- Primary Audit Expectation: SEALED / custody PASS
-- Primary Audit target disclosure: RELEASED
-- Primary Audit execution: reported complete locally by Human observation
-- Primary Audit RESULT on origin/main: NOT_PRESENT as of last Controller check
-- Current Controller command: `00_CONTROL/P0C-001/P0C_001_CURRENT_COMMAND_R3_20260822.md`
-- R3 purpose: transport the already-completed audit result and detached SHA256 to `05_EVIDENCE/P0C-001/PRIMARY_AUDIT/RESULT/` without re-authoring it
+- Result commit: `2cd0bea3b7a10462b5dfd398181cd4f2aa6804c3`
+- Verdict: `NEEDS_HUMAN`
+- Blocking findings in candidate: `0`
+- Non-blocking findings: `6`
+- OPEN_MUST: `1`
+- LOAD_BEARING_UNKNOWN: `1`
+- SECONDARY_AUDIT_REQUIRED: `NO`
+- Sole load-bearing issue: `UNKNOWN-G1`, canonical audit basis ambiguity caused by the old ACTIVE local canonical root being absent.
 
-## Current bottleneck
+## Existing authority evidence
 
-The audit appears to have completed on the local Claude side, but the result has not reached the shared Git handoff path. Therefore the Controller cannot yet adopt PASS/FAIL or advance P0-C to P0.5.
+P0-C handoff records a pre-existing Human-issued R8 decision that already authorizes C1-C4 Git read/use copies as governing authority when their measured SHA256 matches the activated canonical identities. The handoff also records the exact Human Directive, Human Approval, and custody-manifest SHA256 values under the prior change's `00_HUMAN` directory.
 
-This is a bridge/transport defect, not a Human-approval gate.
+Therefore no new Human policy decision is expected merely to resolve UNKNOWN-G1. The next action is to authenticate the pre-existing R8 Human artefacts and re-evaluate only the basis-dependent portion of the Primary Audit.
 
-## Autonomous execution window
+## Current Controller command
 
-Human Owner has already authorized autonomous execution through P2 subject to the active canonical non-waivable boundaries. No planned Human Gate is inserted between P0-C, P0.5, P1, and P2.
+`00_CONTROL/P0C-001/P0C_001_CURRENT_COMMAND_R5_20260822.md`
 
-## Next controller action
+Purpose:
+- authenticate the exact pre-existing Human-issued R8 authority artefacts;
+- independently re-measure the required activated 9-document set;
+- preserve R1 expectation, RAW findings, R1 verdict, candidate and group outputs unchanged;
+- issue supplemental Primary Audit Verdict R2;
+- PASS only if R8 authenticates, canonical identity is 9/9 exact match, target identity remains stable, no blocking MUST appears, and no load-bearing UNKNOWN remains.
 
-As soon as the Primary Audit RESULT and sidecar appear on origin/main, RIAN will verify identity, SHA256, MUST/UNKNOWN, audit verdict and Secondary-Audit trigger status. If the P0-C completion gate is satisfied, RIAN will close P0-C and issue the first P0.5 command without requesting an additional Human approval.
+## Gate
+
+P0-C remains open until supplemental Primary Audit Verdict R2 is available and independently checked by RIAN. No P0.5 work starts before that PASS condition is satisfied.
