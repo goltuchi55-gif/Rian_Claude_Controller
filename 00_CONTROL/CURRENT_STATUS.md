@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-23T01:55:00+09:00
+updated_at_jst: 2026-08-23T03:23:00+09:00
 controller: RIAN
 ---
 
@@ -10,7 +10,7 @@ controller: RIAN
 ## Overall
 
 - ACTIVE_PHASE: P0.5
-- STATE: AUDITOR_EXPECTATION_CUSTODIED__WAITING_FOR_IMPLEMENTER_BUILD_READY
+- STATE: FULL_AUDIT_RELEASED__WAITING_FOR_AUDIT_RESULT
 - P0-C: CLOSED_FOR_ARCHITECTURE_DECISION
 - HUMAN_DECISION_REQUIRED_NOW: NO
 - HUMAN_COPY_PASTE_REQUIRED: NO
@@ -20,31 +20,45 @@ controller: RIAN
 
 - custody commit: `ebacef95aa81a61b3e251bc06ba4e83cf4df0bc1`
 - path: `05_EVIDENCE/P0_5-001/AUDIT/EXPECTATION/CUSTODY_PENDING/P0_5_001_AUDIT_EXPECTATION_R1_20260823.md`
-- detached sidecar present
-- sidecar SHA256: `a5a46fda19bf97c7fc32f4da9fdad18ac8592ec180d81aed7ffb9ed78864928b`
-- BUILD was not read before seal according to the sealed expectation and custody commit record
-- AUDITOR must remain stopped before BUILD disclosure until Controller release
+- detached SHA256: `a5a46fda19bf97c7fc32f4da9fdad18ac8592ec180d81aed7ffb9ed78864928b`
+- sealed before BUILD disclosure according to the expectation and custody record.
 
 ## Implementer BUILD_READY
 
-Required path:
-`05_EVIDENCE/P0_5-001/IMPLEMENTATION/BUILD_READY/`
+- custody commit: `4ec5e267efa317c9772fca1f7e1b50cbc17a881d`
+- path: `05_EVIDENCE/P0_5-001/IMPLEMENTATION/BUILD_READY/`
+- result detached SHA256: `656899516876e2d414e0cb14d0becbde18afa46dbd9b7528bb17b5791c3be8a5`
+- manifest detached SHA256: `b5aa81d29f30a0ce9d25382bf3c8588302c48c55b852515c3e1ccfabbf2373c7`
+- identity-summary detached SHA256: `c738e4fd20c5b8dbc4943ce99556b8dfd5ae99f9e2fa8f5cddd06581862be09f`
+- result reports SELF_TEST=PASS, NEGATIVE_TEST=PASS, N3_WRITE_ISOLATION=PASS, HEADLESS_CLAUDE_FEASIBILITY=AVAILABLE, RIAN_API_FEASIBILITY=NOT_AVAILABLE with explicit fail-closed branch, IDEMPOTENCY_TIMEOUT_LATE_RESPONSE=PASS, CREDENTIALLESS_MOCK_E2E=PASS, WAKE_TRIGGER_REMOVAL=PASS, CORE_AUTOCRLF_CONTROL=PASS, OPEN_MUST=0, LOAD_BEARING_UNKNOWN=0, HUMAN_DECISION_REQUIRED_NOW=NONE, PRODUCTION_IMACT=NONE.
+- commit file set is confined to `05_EVIDENCE/P0_5-001/IMPLEMENTATION/BUILD_READY/`; implementation source remains local-only. A directory-scoped `.gitattributes` was deposited as a byte-integrity control and changes no canonical text or source.
 
-Controller check on `origin/main`: NOT PRESENT.
+Controller custody acceptance is not an audit verdict.
 
-Therefore P0.5 implementation completion has not yet reached the shared control plane and no BUILD disclosure or audit verdict is authorized yet.
+## Full Audit release
 
-Active recovery command for fresh CLAUDE_A / IMPLEMENTER:
-`00_CONTROL/P0_5-001/P0_5_001_BUILD_READY_CUSTODY_RECOVERY_R1_20260823.md`
+Active command:
+`00_CONTROL/P0_5-001/P0_5_001_FULL_AUDIT_RELEASE_COMMAND_R1_20260823.md`
 
-Purpose: finish R3 only if it was not actually completed, otherwise transport the already-completed non-secret BUILD_READY evidence exactly as produced. No AUDIT reading, no source publication, no live model request, no Production/SHADOW, credentials, financial behavior, or canonical modification.
+Command SHA256:
+`4f06646f9523ae866d2c32a10b26ac33e8dacf9ba186f1067764ec38e058306e`
 
-## Next sequence
+Command commits:
+- command: `ae55fe7ece64ad0517a60fb3f4df734f8a49a5c1`
+- sidecar: `e332aaa5366a021d391b0c0422b94c86bd6fb3be`
 
-1. CLAUDE_A deposits BUILD_READY evidence to Git custody.
-2. RIAN verifies BUILD_READY identity, sidecars, self-test/negative-test state and write/custody boundaries.
-3. RIAN records expectation custody acceptance and releases BUILD disclosure only after the custody checks are satisfactory.
-4. CLAUDE_B performs the read-only Full Audit under its sealed expectation.
-5. RIAN adopts PASS/FAIL only from actual audit evidence and advances automatically to P1 only if the P0.5 completion gate is satisfied.
+The AUDITOR may now read the BUILD target. It must independently recompute target/sidecar/manifests at audit start and end, retain RAW findings unaltered, and deposit read-only Full Audit result to `05_EVIDENCE/P0_5-001/AUDIT/RESULT/`.
 
-No additional planned Human Gate is inserted through P2. Non-waivable action-specific Human GO boundaries remain unchanged.
+## P0.5 completion gate
+
+P0.5 remains OPEN until the independent Full Audit returns:
+- VERDICT=PASS;
+- OPEN_MUST=0;
+- LOAD_BEARING_UNKNOWN=0 for P0.5;
+- BLOCKING_FINDINGS=0;
+- any required Secondary Audit condition is satisfied;
+- all SUCCESS_CONDITION items 1-9 remain satisfied.
+
+If those conditions hold, Controller will close P0.5 and advance automatically to P1 under the standing Human authorization.
+
+Non-waivable Human boundaries remain unchanged: no Production/SHADOW operation, outbound/external send beyond the authorized handoff mechanism, credential/secret handling, signed Gate/key action, direct financial/trading/payment/order effect, or canonical modification is authorized here.
