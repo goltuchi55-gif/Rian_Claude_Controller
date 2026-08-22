@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-22T23:35:00+09:00
+updated_at_jst: 2026-08-22T23:59:30+09:00
 controller: RIAN
 ---
 
@@ -9,55 +9,62 @@ controller: RIAN
 
 ## Overall
 
-- ACTIVE_PHASE: P0-C
-- STATE: PRIMARY_AUDIT_PASS__HUMAN_ARCHITECTURE_DECISION_ARTEFACT_PENDING
-- NEXT_PHASE_AFTER_P0C_CLOSEOUT: P0.5
-- HUMAN_DECISION_REQUIRED_NOW: YES__SUBSTANTIVE_HQ_A_TO_HQ_I_PACKET
+- ACTIVE_PHASE: P0.5
+- STATE: PHASE_BASIS_DISCOVERY_R2_READY
+- P0-C: CLOSED_FOR_ARCHITECTURE_DECISION
+- HUMAN_DECISION_REQUIRED_NOW: NO
 - HUMAN_COPY_PASTE_REQUIRED: NO
 - PRODUCTION_IMPACT: NONE
 
-## Primary Audit
+## P0-C closeout basis
 
-- Supplemental result commit: `51321dc455afcb450f7689287f0b3daee7dcbdbe`
-- Verdict R2: `PASS`
-- Verdict SHA256: `9e14d0f7ea1aaca69255fdbe2ce766cd3a4d7d881bdeb8a3e47e939b0a076c17` / detached sidecar reproduced
-- Basis evidence SHA256: `75e846446b8ffb9dfa8445d62dc1b8ac4a17ced1741e63794695075303c9f118` / detached sidecar reproduced
+Human Architecture Decision:
+- decision: `APPROVE`
+- exact candidate SHA256: `2eb3cc51f03bc5296f2630a22317d721807cce290392357607111877d56b7d00`
+- artefact: `00_HUMAN/P0C-001/P0C_001_HUMAN_ARCHITECTURE_DECISION_APPROVE_20260822.md`
+- decision commit: `cbf0d193f7f6302843815e1912e3699647f1e182`
+
+Independent Primary Audit Supplemental Verdict R2:
+- audit commit: `51321dc455afcb450f7689287f0b3daee7dcbdbe`
+- verdict: `PASS`
 - OPEN_MUST: `0`
 - LOAD_BEARING_UNKNOWN: `0`
 - BLOCKING_FINDINGS: `0`
 - SECONDARY_AUDIT_REQUIRED: `NO`
-- Activated canonical identity: `9/9 MATCH`, `0 divergence`
-- Audit target SHA256: `2eb3cc51f03bc5296f2630a22317d721807cce290392357607111877d56b7d00`
-- R1 / RAW findings remain immutable history.
-- Seven non-blocking findings remain recorded (F-01 through F-07).
+- activated canonical identity: `9/9 MATCH`, `0 divergence`
 
-## P0-C remaining success condition
+Seven non-blocking findings remain immutable audit history and are not erased by closeout.
 
-P0-C is a Human Architecture Gate. The independent audit is complete and PASS, but the audited consolidated candidate itself is not yet a Human-issued decision artefact.
+## P0.5 Gate state
 
-The prior Human authorization for autonomous execution through P2 authorizes the work, tests, audits, Git handoff, bounded correction and automatic phase transitions after each objective gate. It is not expanded by the Controller into an unstated approval of the exact HQ-A through HQ-I decision packet.
+The prior P0.5 HOLD was released after the exact P0-C Human Architecture APPROVE was issued.
 
-Therefore one substantive Human Owner decision remains before P0-C can be closed: approve, reject, or defer the exact consolidated candidate SHA256 above as the P0-C Human Architecture Decision.
+The previously held P0.5 R1 basis command remains historical because it cites an earlier corrected closeout artefact.
 
-This is not an AI-added procedural gate. It is the named completion condition of P0-C.
+The only operative P0.5 command is:
 
-## Controller correction / P0.5 hold
+`00_CONTROL/P0_5-001/P0_5_001_CURRENT_COMMAND_R2_20260822.md`
 
-An earlier closeout and P0.5 R1 command were issued prematurely during a concurrent Controller race. They are now explicitly corrected/held and remain only as immutable history:
+Command SHA256:
 
-- correction: `00_CONTROL/P0C-001/P0C_001_CONTROLLER_CLOSEOUT_CORRECTION_R1_20260822.md`
-- P0.5 hold: `00_CONTROL/P0_5-001/P0_5_001_HOLD_R1_20260822.md`
+`496abe84407a0fb193861444ef9cdfe5f204370ec54c03460984c2143e25f9f4`
 
-No P0.5 command is operative while this HOLD is active.
+Stage: `PHASE_BASIS_DISCOVERY`
+Role: `CLAUDE_A / IMPLEMENTER`
+Mode: read-only except planning/evidence and permitted Git handoff.
 
-## Next action
+## Concurrent-command correction
 
-A minimal Human Decision Request is published at:
-`00_CONTROL/P0C-001/P0C_001_HUMAN_ARCHITECTURE_DECISION_REQUEST_20260822.md`
+Implementation-oriented P0.5 commands issued concurrently under `00_CONTROL/P0.5/` are HOLD and not operative until the R2 phase-basis result is reviewed.
 
-Decision target:
-`2eb3cc51f03bc5296f2630a22317d721807cce290392357607111877d56b7d00`
+Correction artefact:
+`00_CONTROL/P0.5/P0_5_PREMATURE_COMMANDS_HOLD_R1_20260822.md`
 
-Allowed decisions: `APPROVE`, `REJECT`, `DEFER`.
+## Next phase logic
 
-After a Human-issued APPROVE binds the exact candidate SHA256, RIAN will fix the decision artefact, close P0-C, release the P0.5 HOLD, and issue a fresh P0.5 command without any additional planned Human Gate.
+1. CLAUDE_A executes P0.5 phase-basis discovery R2.
+2. RIAN reads the Git result and verifies authority/Gate/MUST/UNKNOWN/review-tier conclusions.
+3. Only then RIAN issues the minimal P0.5 implementation command and CLAUDE_B expectation command as applicable.
+4. No additional planned Human Gate is inserted through P2 under the existing Human autonomous-execution authorization.
+
+Non-waivable action-specific Human GO boundaries remain unchanged for Production, outbound/external send, third-party write, credentials/secrets, and direct financial/trading/payment/order effects.
