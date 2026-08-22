@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-22T23:59:30+09:00
+updated_at_jst: 2026-08-23T00:21:00+09:00
 controller: RIAN
 ---
 
@@ -10,61 +10,87 @@ controller: RIAN
 ## Overall
 
 - ACTIVE_PHASE: P0.5
-- STATE: PHASE_BASIS_DISCOVERY_R2_READY
+- STATE: FULL_AUDIT_EXPECTATION_AND_BUILD_READY_TO_START
 - P0-C: CLOSED_FOR_ARCHITECTURE_DECISION
 - HUMAN_DECISION_REQUIRED_NOW: NO
 - HUMAN_COPY_PASTE_REQUIRED: NO
 - PRODUCTION_IMPACT: NONE
 
-## P0-C closeout basis
+## P0.5 Phase Basis Review
 
-Human Architecture Decision:
-- decision: `APPROVE`
-- exact candidate SHA256: `2eb3cc51f03bc5296f2630a22317d721807cce290392357607111877d56b7d00`
-- artefact: `00_HUMAN/P0C-001/P0C_001_HUMAN_ARCHITECTURE_DECISION_APPROVE_20260822.md`
-- decision commit: `cbf0d193f7f6302843815e1912e3699647f1e182`
+CLAUDE_A Phase Basis Discovery R2:
+- commit: `1e09d60326c40fdf17de818e64e578d42312dd65`
+- result SHA256: `9eb9b7ec628457fdd290952786f0f82db609ccb54472dc5b2a92c21dc2e29686`
+- PHASE_DEFINITION: `PARTIAL`
+- REVIEW_TIER: `FULL_AUDIT`
+- PLAN_AUDIT_REQUIRED: `NO`
+- HUMAN_DECISION_REQUIRED_NOW: `NO`
 
-Independent Primary Audit Supplemental Verdict R2:
-- audit commit: `51321dc455afcb450f7689287f0b3daee7dcbdbe`
-- verdict: `PASS`
-- OPEN_MUST: `0`
-- LOAD_BEARING_UNKNOWN: `0`
-- BLOCKING_FINDINGS: `0`
-- SECONDARY_AUDIT_REQUIRED: `NO`
-- activated canonical identity: `9/9 MATCH`, `0 divergence`
+Controller review accepted the measured findings and resolved the Controller-owned gaps before BUILD.
 
-Seven non-blocking findings remain immutable audit history and are not erased by closeout.
+## Controller Phase Definition
 
-## P0.5 Gate state
+Active:
+`00_CONTROL/P0_5-001/P0_5_001_CONTROLLER_PHASE_DEFINITION_R1_20260823.md`
 
-The prior P0.5 HOLD was released after the exact P0-C Human Architecture APPROVE was issued.
+SHA256:
+`091493b2adf82b955063fd8834fa97274bc528c5a0f15fb7f78ab7953f3f0cd2`
 
-The previously held P0.5 R1 basis command remains historical because it cites an earlier corrected closeout artefact.
+Key resolutions:
+- objective P0.5 completion gate fixed;
+- P1/P2 definitions bound to the existing Human-approved roadmap;
+- only `goltuchi55-gif/Rian_Claude_Controller` is authorized for P0.5 remote handoff;
+- implementation source remains local-only;
+- remote writes are custody-process only;
+- `core.autocrlf=false` is mandatory for custody operations;
+- the Phase Basis Context is not eligible to become the build Implementer;
+- signed Gate/key work remains out of scope;
+- P0.5 is one-cycle local feasibility only, not persistent unattended operation.
 
-The only operative P0.5 command is:
+## Active Commands
 
-`00_CONTROL/P0_5-001/P0_5_001_CURRENT_COMMAND_R2_20260822.md`
+### AUDITOR / CLAUDE_B
 
-Command SHA256:
+`00_CONTROL/P0_5-001/P0_5_001_AUDITOR_EXPECTATION_COMMAND_R1_20260823.md`
 
-`496abe84407a0fb193861444ef9cdfe5f204370ec54c03460984c2143e25f9f4`
+SHA256:
+`dbf1015ff942be01bcf8d54ad9cf0ca3eede158511e297c69aa1ebd2275def16`
 
-Stage: `PHASE_BASIS_DISCOVERY`
-Role: `CLAUDE_A / IMPLEMENTER`
-Mode: read-only except planning/evidence and permitted Git handoff.
+Stage: `EXPECTATION`
 
-## Concurrent-command correction
+Must seal expectation before BUILD disclosure.
 
-Implementation-oriented P0.5 commands issued concurrently under `00_CONTROL/P0.5/` are HOLD and not operative until the R2 phase-basis result is reviewed.
+### IMPLEMENTER / fresh CLAUDE_A
 
-Correction artefact:
-`00_CONTROL/P0.5/P0_5_PREMATURE_COMMANDS_HOLD_R1_20260822.md`
+`00_CONTROL/P0_5-001/P0_5_001_IMPLEMENTATION_COMMAND_R3_20260823.md`
 
-## Next phase logic
+SHA256:
+`e54e122967a2e1f2f93c02dfb42b3eb9aa0b76fa905cca86c75897ab4d61287b`
 
-1. CLAUDE_A executes P0.5 phase-basis discovery R2.
-2. RIAN reads the Git result and verifies authority/Gate/MUST/UNKNOWN/review-tier conclusions.
-3. Only then RIAN issues the minimal P0.5 implementation command and CLAUDE_B expectation command as applicable.
-4. No additional planned Human Gate is inserted through P2 under the existing Human autonomous-execution authorization.
+Stage: `LOCAL_FEASIBILITY_BUILD`
 
-Non-waivable action-specific Human GO boundaries remain unchanged for Production, outbound/external send, third-party write, credentials/secrets, and direct financial/trading/payment/order effects.
+Must use a fresh IMPLEMENTER Context that has not read AUDIT content.
+
+## P0.5 Completion Gate
+
+P0.5 does not close until:
+- N-3 write-isolation/negative tests PASS;
+- headless-Claude local non-interactive capability is measured without live model request;
+- RIAN Adapter feasibility is measured through a credentialless local contract/mock;
+- timeout/late/idempotency mock is fail-closed with durable INTENT and no blind resend;
+- credentialless mock E2E PASS;
+- one WAKE-only dispatcher cycle completes without Human wake after process start;
+- exact-byte/autocrlf controls PASS;
+- independent Full Audit PASS with OPEN_MUST=0 and no P0.5-load-bearing UNKNOWN;
+- no non-waivable boundary is crossed.
+
+## Next Sequence
+
+1. CLAUDE_B authors/seals expectation and deposits it to Git custody.
+2. Fresh CLAUDE_A performs the bounded local build/self-tests and deposits only BUILD_READY evidence, not source code.
+3. RIAN independently verifies expectation/result custody.
+4. RIAN releases BUILD disclosure to AUDITOR.
+5. CLAUDE_B performs read-only Full Audit.
+6. RIAN decides P0.5 PASS/FAIL and, if PASS, advances automatically to P1.
+
+No additional planned Human Gate is inserted through P2.
