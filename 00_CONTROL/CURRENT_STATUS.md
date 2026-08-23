@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-23T03:23:00+09:00
+updated_at_jst: 2026-08-23T09:54:00+09:00
 controller: RIAN
 ---
 
@@ -10,55 +10,104 @@ controller: RIAN
 ## Overall
 
 - ACTIVE_PHASE: P0.5
-- STATE: FULL_AUDIT_RELEASED__WAITING_FOR_AUDIT_RESULT
+- STATE: PRIMARY_FULL_AUDIT_PASS__SECONDARY_PROCESS_AUDIT_EXPECTATION_READY
 - P0-C: CLOSED_FOR_ARCHITECTURE_DECISION
 - HUMAN_DECISION_REQUIRED_NOW: NO
 - HUMAN_COPY_PASTE_REQUIRED: NO
 - PRODUCTION_IMPACT: NONE
 
-## Auditor expectation
+## P0.5 technical result
 
-- custody commit: `ebacef95aa81a61b3e251bc06ba4e83cf4df0bc1`
-- path: `05_EVIDENCE/P0_5-001/AUDIT/EXPECTATION/CUSTODY_PENDING/P0_5_001_AUDIT_EXPECTATION_R1_20260823.md`
-- detached SHA256: `a5a46fda19bf97c7fc32f4da9fdad18ac8592ec180d81aed7ffb9ed78864928b`
-- sealed before BUILD disclosure according to the expectation and custody record.
+BUILD_READY custody commit:
+`4ec5e267efa317c9772fca1f7e1b50cbc17a881d`
 
-## Implementer BUILD_READY
+Reported and Primary-Auditor re-measured:
+- SELF_TEST: PASS
+- NEGATIVE_TEST: PASS
+- N3_WRITE_ISOLATION: PASS
+- HEADLESS_CLAUDE_FEASIBILITY: AVAILABLE
+- RIAN_API_FEASIBILITY: NOT_AVAILABLE with explicit fail-closed branch
+- IDEMPOTENCY_TIMEOUT_LATE_RESPONSE: PASS
+- CREDENTIALLESS_MOCK_E2E: PASS
+- WAKE_TRIGGER_REMOVAL: PASS
+- CORE_AUTOCRLF_CONTROL: PASS
 
-- custody commit: `4ec5e267efa317c9772fca1f7e1b50cbc17a881d`
-- path: `05_EVIDENCE/P0_5-001/IMPLEMENTATION/BUILD_READY/`
-- result detached SHA256: `656899516876e2d414e0cb14d0becbde18afa46dbd9b7528bb17b5791c3be8a5`
-- manifest detached SHA256: `b5aa81d29f30a0ce9d25382bf3c8588302c48c55b852515c3e1ccfabbf2373c7`
-- identity-summary detached SHA256: `c738e4fd20c5b8dbc4943ce99556b8dfd5ae99f9e2fa8f5cddd06581862be09f`
-- result reports SELF_TEST=PASS, NEGATIVE_TEST=PASS, N3_WRITE_ISOLATION=PASS, HEADLESS_CLAUDE_FEASIBILITY=AVAILABLE, RIAN_API_FEASIBILITY=NOT_AVAILABLE with explicit fail-closed branch, IDEMPOTENCY_TIMEOUT_LATE_RESPONSE=PASS, CREDENTIALLESS_MOCK_E2E=PASS, WAKE_TRIGGER_REMOVAL=PASS, CORE_AUTOCRLF_CONTROL=PASS, OPEN_MUST=0, LOAD_BEARING_UNKNOWN=0, HUMAN_DECISION_REQUIRED_NOW=NONE, PRODUCTION_IMACT=NONE.
-- commit file set is confined to `05_EVIDENCE/P0_5-001/IMPLEMENTATION/BUILD_READY/`; implementation source remains local-only. A directory-scoped `.gitattributes` was deposited as a byte-integrity control and changes no canonical text or source.
+## Primary Full Audit
 
-Controller custody acceptance is not an audit verdict.
+Audit result commit:
+`e64dbbfe4aba08e7d4c47f8fd25359258392611f`
 
-## Full Audit release
+Verdict:
+- PASS
+- OPEN_MUST=0
+- LOAD_BEARING_UNKNOWN=0
+- BLOCKING_FINDINGS=0
 
-Active command:
-`00_CONTROL/P0_5-001/P0_5_001_FULL_AUDIT_RELEASE_COMMAND_R1_20260823.md`
+Primary RAW and verdict remain immutable.
 
-Command SHA256:
-`4f06646f9523ae866d2c32a10b26ac33e8dacf9ba186f1067764ec38e058306e`
+Material non-blocking finding F-01 is carried forward: the full-clone custody pattern materialized AUDIT material in the IMPLEMENTER-side change root. P1 preventive scope therefore includes path-filtered/sparse custody so AUDIT content is structurally absent from IMPLEMENTER workspaces.
 
-Command commits:
-- command: `ae55fe7ece64ad0517a60fb3f4df734f8a49a5c1`
-- sidecar: `e332aaa5366a021d391b0c0422b94c86bd6fb3be`
+## C4 Article 33 T-1 determination
 
-The AUDITOR may now read the BUILD target. It must independently recompute target/sidecar/manifests at audit start and end, retain RAW findings unaltered, and deposit read-only Full Audit result to `05_EVIDENCE/P0_5-001/AUDIT/RESULT/`.
+Controller determination:
+`00_CONTROL/P0_5-001/P0_5_001_T1_CONTROLLER_DETERMINATION_R1_20260823.md`
 
-## P0.5 completion gate
+SHA256:
+`8439e245e223eb13f7d6691c67a870cada85113a792e5e0b8b70d7718585afec`
 
-P0.5 remains OPEN until the independent Full Audit returns:
-- VERDICT=PASS;
-- OPEN_MUST=0;
-- LOAD_BEARING_UNKNOWN=0 for P0.5;
-- BLOCKING_FINDINGS=0;
-- any required Secondary Audit condition is satisfied;
-- all SUCCESS_CONDITION items 1-9 remain satisfied.
+Controller conclusion:
+- T-1 = MET
+- SECONDARY_AUDIT_REQUIRED = YES
 
-If those conditions hold, Controller will close P0.5 and advance automatically to P1 under the standing Human authorization.
+Reason: authorized Git custody/handoff reached external transmission and third-party write. Permission to perform the handoff does not suppress the C4 Article 33 trigger.
 
-Non-waivable Human boundaries remain unchanged: no Production/SHADOW operation, outbound/external send beyond the authorized handoff mechanism, credential/secret handling, signed Gate/key action, direct financial/trading/payment/order effect, or canonical modification is authorized here.
+## Active next command
+
+Fresh Secondary AUDITOR Context only:
+
+`00_CONTROL/P0_5-001/P0_5_001_SECONDARY_AUDIT_EXPECTATION_COMMAND_R1_20260823.md`
+
+SHA256:
+`e4c87889017504e5dad439787daed75d25d8c5d81f3289cdacaba41ba95796aa`
+
+Role:
+- c4_role: AUDITOR
+- order: secondary
+- scope: process
+- stage: expectation
+
+D-3 applies. The fresh Secondary Context must not read Primary finding body, grounds, verdict or reasoning before fixing its own RAW result.
+
+## Revised roadmap
+
+`00_CONTROL/ROADMAP.md`
+
+SHA256:
+`ccdcafe670fd8fe3725a00cbf72c5a3223158b92b496f03a70b0037a84dcc713`
+
+P1 now explicitly includes:
+- Local Controller durable state/WAL and state machine
+- START_REQUEST
+- RESULT_READY/AUDIT_READY atomic markers
+- Worker Registry
+- Heartbeat
+- PID/process reconciliation
+- runtime_status.json
+- unmanaged Claude detection
+- lock/lease/dedup/replay
+- path-filtered/sparse custody
+- Git as handoff/evidence/historian rather than primary runtime bus
+
+Claude A is modeled as an Engineering Group inside canonical IMPLEMENTER with Maker / Checker / Internal QA functions. Claude B remains the independent AUDITOR group.
+
+## Next sequence
+
+1. Fresh Secondary AUDITOR authors and seals its expectation without Primary Audit exposure.
+2. Controller verifies expectation custody.
+3. Controller releases only the Secondary process target.
+4. Secondary AUDITOR fixes its own RAW result and verdict.
+5. If Primary and Secondary disagree, both are passed unchanged to Human Owner; Controller does not arbitrate.
+6. If Secondary closes PASS with no new blocking MUST/load-bearing UNKNOWN, P0.5 closes.
+7. P1 starts automatically under the standing through-P2 execution authorization.
+
+No additional planned Human Gate is inserted through P2. Non-waivable Human boundaries remain unchanged.
