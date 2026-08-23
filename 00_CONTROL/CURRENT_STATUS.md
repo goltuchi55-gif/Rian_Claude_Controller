@@ -1,7 +1,7 @@
 ---
 document_id: RIAN_CLAUDE_CONTROLLER_CURRENT_STATUS
 document_type: LIVE_STATUS
-updated_at_jst: 2026-08-23T09:54:00+09:00
+updated_at_jst: 2026-08-23T10:24:00+09:00
 controller: RIAN
 ---
 
@@ -15,6 +15,8 @@ controller: RIAN
 - HUMAN_DECISION_REQUIRED_NOW: NO
 - HUMAN_COPY_PASTE_REQUIRED: NO
 - PRODUCTION_IMPACT: NONE
+- INTERACTIVE_REMOTE_OPS: AVAILABLE
+- AUTONOMOUS_RIAN_TRANSPORT: NOT_ESTABLISHED
 
 ## P0.5 technical result
 
@@ -78,14 +80,41 @@ Role:
 
 D-3 applies. The fresh Secondary Context must not read Primary finding body, grounds, verdict or reasoning before fixing its own RAW result.
 
+## Interactive Remote Ops capability
+
+An authorized Remote Desktop Commander connection to the development host has been established and a read-only PowerShell probe succeeded.
+
+Measured operating consequence:
+- RIAN can inspect local filesystem/process/runtime state during an active interaction;
+- RIAN can perform attended phase-authorized PowerShell operations without Human copy/paste relay;
+- this channel is interactive/supervisory and is not the Local Controller;
+- this channel is not proof of an autonomous RIAN API/transport;
+- loss of the channel must not drive or corrupt runtime state;
+- remote terminal availability does not expand C1-C4 authority.
+
+P1 will therefore treat Remote Ops as an optional engineering/commissioning/recovery channel while the Local Controller remains the primary durable runtime owner.
+
 ## Revised roadmap
 
 `00_CONTROL/ROADMAP.md`
 
-SHA256:
-`ccdcafe670fd8fe3725a00cbf72c5a3223158b92b496f03a70b0037a84dcc713`
+Revision:
+`2`
 
-P1 now explicitly includes:
+SHA256:
+`2ffb65a604347139db9019bd7afa881e2d5594cbd21c7da1c8d1c545a2458af3`
+
+Roadmap revision 2 additionally reflects:
+- RIAN interactive Remote PowerShell operation during attended development;
+- Remote Ops as optional supervisory/commissioning/recovery channel, not a runtime dependency;
+- START intent may be materialized by RIAN through authorized PowerShell during attended development;
+- P1 runtime status includes Local Controller health and Remote Ops health;
+- P2 keeps autonomous RianTransport separate from the interactive Remote PowerShell path;
+- P3 completion now requires a bounded cycle without Human copy/paste, manual Claude wake, or continuous RIAN participation;
+- P4 tests Remote Ops disconnect behavior;
+- P6 displays Remote Ops connection health.
+
+P1 still explicitly includes:
 - Local Controller durable state/WAL and state machine
 - START_REQUEST
 - RESULT_READY/AUDIT_READY atomic markers
